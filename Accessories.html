@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessories - TransacSure Market</title>
+    <link rel="icon" type="image/png" href="OLFU.jpg">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      background: linear-gradient(135deg, #0bab64, #3bb78f);
+      color: white;
+      padding: 14px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .nav-left a {
+      color: white;
+      text-decoration: none;
+      margin-right: 15px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav .nav-left a:hover {
+      color: #d4f7df;
+    }
+
+    /* Categories */
+    .categories {
+      background: #ffffff;
+      padding: 12px 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .categories button {
+      background: #0bab64;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      margin: 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+
+    .categories button:hover {
+      background: #3bb78f;
+    }
+
+    /* Content */
+    .content {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .content h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #0bab64;
+    }
+
+    /* Product cards */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    .product h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .product p {
+      font-size: 16px;
+      font-weight: bold;
+      color: #0bab64;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #3bb78f;
+      color: white;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-left">
+      <a href="TransacSure.html">🏠 Home</a>
+      <span>› Accessories</span>
+    </div>
+  </nav>
+
+  <!-- Categories -->
+  <div class="categories">
+    <button onclick="location.href='Uniforms.html'">Uniforms</button>
+    <button onclick="location.href='supplies.html'">Supplies</button>
+    <button onclick="location.href='books.html'">Books</button>
+    <button onclick="location.href='food.html'">Food</button>
+    <button onclick="location.href='accessories.html'">Accessories</button>
+    <button onclick="location.href='electronics.html'">Electronics</button>
+    <button onclick="location.href='deals.html'">Deals</button>
+    <button onclick="location.href='profile.html'">Profile</button>
+  </div>
+
+  <div class="content">
+    <h1>Accessories</h1>
+    <div class="products">
+      <div class="product">
+        <h3><a href="pages/lanyard.html">University Lanyard</a></h3>
+        <p>₱120</p>
+      </div>
+      <div class="product">
+        <h3><a href="pages/pins.html">Custom Pins (Set of 3)</a></h3>
+        <p>₱80</p>
+      </div>
+      <div class="product">
+        <h3><a href="pages/keychain.html">Keychain</a></h3>
+        <p>₱100</p>
+      </div>
+      <div class="product">
+        <h3><a href="pages/wristband.html">Wristband</a></h3>
+        <p>₱70</p>
+      </div>
+      <div class="product">
+        <h3><a href="pages/id-holder.html">Student ID Holder</a></h3>
+        <p>₱90</p>
+      </div>
+      <div class="product">
+        <h3><a href="pages/tote-bag.html">Tote Bag</a></h3>
+        <p>₱150</p>
+      </div>
+      <div class="product">
+        <h3><a href="pages/sticker-pack.html">Sticker Pack</a></h3>
+        <p>₱50</p>
+      </div>
+      <div class="product">
+        <h3><a href="pages/cap-beanie.html">Cap / Beanie</a></h3>
+        <p>₱250</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 TransacSure Market. All Rights Reserved.
+  </footer>
+</body>
+</html>

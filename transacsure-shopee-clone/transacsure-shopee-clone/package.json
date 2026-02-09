@@ -1,0 +1,23 @@
+{
+  "name": "transacsure-shopee-clone",
+  "version": "1.0.0",
+  "description": "A clone of the Shopee homepage for the TransacSure project.",
+  "main": "src/scripts/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vite": "^2.0.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "ecommerce",
+    "shopee",
+    "clone",
+    "transacsure"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>TransacSure Market</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="OLFU.jpg">
+  <style>
+    :root{
+      --primary1:#0bab64; --primary2:#3bb78f; --muted:#f2f4f3;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --radius:8px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Arial, sans-serif;margin:0;background:#fafafa;color:#222}
+
+    /* Header / Navbar */
+    .topbar{background:linear-gradient(135deg,var(--primary1),var(--primary2));color:#fff;padding:8px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:60}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:40px;height:40px;border-radius:6px;object-fit:cover}
+    .brand .title{font-weight:700;font-size:20px}
+    .nav-links{display:flex;gap:14px;align-items:center}
+    .nav-links a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:600}
+    .nav-actions{display:flex;gap:8px;align-items:center}
+
+    /* Search */
+    .search-wrap{display:flex;max-width:900px;margin:12px auto;padding:0 12px;gap:8px}
+    .search {flex:1;display:flex;background:#fff;border-radius:28px;padding:6px 8px;align-items:center;box-shadow:var(--card-shadow)}
+    .search input{flex:1;border:0;padding:10px 12px;border-radius:20px;font-size:15px;outline:none}
+    .search button{background:linear-gradient(135deg,var(--primary1),var(--primary2));border:0;color:#fff;padding:10px 14px;border-radius:20px;cursor:pointer;font-weight:700}
+    .suggestions{position:relative}
+    .suggest-list{position:absolute;left:0;right:0;background:#fff;border-radius:8px;padding:6px;box-shadow:var(--card-shadow);z-index:30;max-height:220px;overflow:auto}
+
+    /* Hero / Carousel */
+    .hero{height:260px;margin:18px auto;max-width:1200px;border-radius:12px;overflow:hidden;position:relative;background:#ddd}
+    .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:flex-start;padding:28px;color:#fff;font-weight:800;font-size:28px;transition:opacity .6s;opacity:0}
+    .hero-slide.active{opacity:1}
+    .hero .cta{background:rgba(0,0,0,0.28);padding:10px 16px;border-radius:8px}
+
+    /* Promo banners */
+    .promo-row{display:flex;gap:12px;max-width:1200px;margin:12px auto;padding:0 12px}
+    .promo{flex:1;background:#fff;border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center;box-shadow:var(--card-shadow)}
+    .promo img{width:100px;height:80px;object-fit:cover;border-radius:8px}
+
+    /* Categories */
+    .categories{max-width:1200px;margin:18px auto;padding:0 12px;display:flex;gap:10px;flex-wrap:wrap}
+    .category{background:#fff;padding:10px 14px;border-radius:999px;border:1px solid #e6efe9;color:var(--primary1);font-weight:700;cursor:pointer;box-shadow:var(--card-shadow)}
+    .category span{display:block;font-size:12px;color:#666;font-weight:600}
+
+    /* Layout */
+    .main {max-width:1200px;margin:18px auto;display:grid;grid-template-columns: 1fr 320px;gap:18px;padding:0 12px}
+    @media (max-width:980px){ .main{grid-template-columns:1fr} .promo-row{flex-direction:column} .cart-sidebar{position:fixed;right:0;top:0;bottom:0;width:100%;max-width:420px} }
+
+    /* Product grid */
+    .products{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+    .product{background:#fff;border-radius:10px;padding:10px;box-shadow:var(--card-shadow);display:flex;flex-direction:column;gap:8px;transition:transform .12s}
+    .product:hover{transform:translateY(-4px)}
+    .product img{width:100%;height:150px;object-fit:cover;border-radius:8px}
+    .p-title{font-weight:700;font-size:14px;min-height:40px}
+    .p-price{color:var(--primary1);font-weight:800}
+    .p-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#777}
+    .badge{background:linear-gradient(135deg,var(--primary1),var(--primary2));color:#fff;padding:4px 8px;border-radius:8px;font-weight:700;font-size:12px}
+
+    .prod-actions{display:flex;gap:8px;margin-top:auto}
+    .btn{border:0;padding:8px;border-radius:8px;cursor:pointer;font-weight:700}
+    .btn-outline{background:#fff;border:1px solid #ddd}
+    .btn-primary{background:linear-gradient(135deg,var(--primary1),var(--primary2));color:#fff}
+
+    /* Sidebar / Cart */
+    .cart-sidebar{background:#fff;border-radius:10px;padding:12px;height:fit-content;box-shadow:var(--card-shadow)}
+    .cart-item{display:flex;gap:8px;align-items:center;padding:8px;border-bottom:1px dashed #eee}
+    .cart-item img{width:56px;height:56px;object-fit:cover;border-radius:6px}
+    .cart-footer{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
+
+    /* Floating cart button */
+    .cart-float{position:fixed;right:18px;bottom:18px;background:linear-gradient(135deg,var(--primary1),var(--primary2));color:#fff;padding:14px;border-radius:50%;box-shadow:0 6px 20px rgba(0,0,0,0.18);cursor:pointer;z-index:70}
+    .cart-count{background:#ff4d4f;color:#fff;padding:4px 7px;border-radius:999px;font-size:12px;margin-left:6px}
+
+    /* Modal quick view */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:90}
+    .modal{background:#fff;border-radius:12px;max-width:920px;width:94%;padding:16px;display:flex;gap:12px}
+    @media(max-width:720px){.modal{flex-direction:column}}
+    .modal img{width:320px;height:320px;object-fit:cover;border-radius:8px}
+    .modal .meta{flex:1}
+
+    footer{background:#222;color:#fff;padding:18px;text-align:center;margin-top:28px;border-top:4px solid rgba(255,255,255,0.03)}
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="brand">
+      <img src="OLFU.jpg" alt="OLFU">
+      <div>
+        <div class="title">TransacSure</div>
+        <div style="font-size:12px;opacity:.9">Trusted Marketplace for OLFU Students</div>
+      </div>
+    </div>
+
+    <div class="nav-links" aria-hidden>
+      <a href="TransacSure.html">Home</a>
+      <a href="Categories.html">Categories</a>
+      <a href="Deals.html">Deals</a>
+      <a href="Profile.html">Profile</a>
+    </div>
+
+    <div class="nav-actions">
+      <div style="font-weight:700">Welcome</div>
+      <div style="width:10px"></div>
+      <div class="cart-float" id="openCart" title="Open cart">🛒 <span class="cart-count" id="floatCount">0</span></div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <div class="search">
+      <input id="searchInput" placeholder="Search for products, e.g., Physics book, Uniform..." autocomplete="off" />
+      <button id="searchBtn">Search</button>
+    </div>
+    <div class="suggestions">
+      <div class="suggest-list" id="suggestList" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero" aria-hidden>
+    <div class="hero-slide" style="background-image:linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('OLFU BUILDING.PNG')">
+      <div class="cta">Back-to-school essentials • Trusted sellers • Secure transactions</div>
+    </div>
+    <div class="hero-slide" style="background-image:linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('https://images.unsplash.com/photo-1542744094-24638eff58bb')">
+      <div class="cta">Daily Deals • Limited-time discounts</div>
+    </div>
+    <div class="hero-slide" style="background-image:linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('https://images.unsplash.com/photo-1542223616-4373a8b0d27c')">
+      <div class="cta">Fast pickup inside campus • Support local sellers</div>
+    </div>
+  </div>
+
+  <!-- PROMOS -->
+  <div class="promo-row">
+    <div class="promo">
+      <img src="https://img.freepik.com/free-vector/super-sale-banner-template_23-2148895248.jpg?w=200" alt="">
+      <div>
+        <div style="font-weight:800">Flash Sale</div>
+        <div style="font-size:13px;color:#666">Up to 70% off selected items</div>
+      </div>
+    </div>
+    <div class="promo">
+      <img src="https://img.freepik.com/free-vector/discount-labels-sale-poster_1262-20574.jpg?w=200" alt="">
+      <div>
+        <div style="font-weight:800">Free Shipping</div>
+        <div style="font-size:13px;color:#666">On selected campus pickup orders</div>
+      </div>
+    </div>
+    <div class="promo">
+      <img src="https://img.freepik.com/free-vector/cashback-offer-poster-template_23-2148707113.jpg?w=200" alt="">
+      <div>
+        <div style="font-weight:800">Student Cashback</div>
+        <div style="font-size:13px;color:#666">Earn rewards when you buy</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="categories" role="list">
+    <div class="category" onclick="filterCategory('All')">All<span>Everything</span></div>
+    <div class="category" onclick="filterCategory('Uniforms')">👕<span>Uniforms</span></div>
+    <div class="category" onclick="filterCategory('Supplies')">✏️<span>Supplies</span></div>
+    <div class="category" onclick="filterCategory('Books')">📚<span>Books</span></div>
+    <div class="category" onclick="filterCategory('Food')">🍱<span>Food</span></div>
+    <div class="category" onclick="filterCategory('Accessories')">🎒<span>Accessories</span></div>
+  </div>
+
+  <!-- MAIN: products + cart sidebar -->
+  <div class="main">
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2 style="margin:0">Recommended for you</h2>
+        <div style="color:#666;font-weight:700" id="resultCount">3 items</div>
+      </div>
+
+      <div class="products" id="productGrid">
+        <!-- products rendered by JS -->
+      </div>
+    </div>
+
+    <aside class="cart-sidebar" id="cartSidebar" aria-label="Cart">
+      <h3 style="margin:0 0 8px 0">Your Cart</h3>
+      <div id="cartItems">
+        <div style="color:#666">Cart is empty</div>
+      </div>
+      <div class="cart-footer" style="margin-top:8px">
+        <div style="font-weight:800">Total: ₱<span id="cartTotal">0</span></div>
+        <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- QUICK VIEW / MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-hidden="true">
+    <div class="modal" role="document">
+      <img id="modalImg" src="" alt="product">
+      <div class="meta">
+        <h3 id="modalTitle"></h3>
+        <div style="color:var(--primary1);font-weight:800;font-size:20px" id="modalPrice"></div>
+        <p id="modalDesc" style="color:#555"></p>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <input id="modalQty" type="number" min="1" value="1" style="width:80px;padding:8px;border-radius:8px;border:1px solid #ddd">
+          <button class="btn btn-primary" id="modalAdd">Add to cart</button>
+          <button class="btn btn-outline" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Our Lady of Fatima University - TransacSure Market • Built for students
+  </footer>
+
+  <script>
+    // Sample product data (expandable)
+    const PRODUCTS = [
+      {id:1,name:"PHYSICS 1",price:400,category:"Books",img:"https://img.lazcdn.com/g/ff/kf/Sd1640d1f28c644988e547bc33216ce24E.jpg_360x360q75.jpg_.webp",desc:"Introductory physics textbook for first year."},
+      {id:2,name:"PHILOSOPHY",price:400,category:"Books",img:"https://ins-poas.nlp.gov.ph/system/files/2024-07/Essentials%20of%20Philo.jpg",desc:"Philosophy essentials for humanities."},
+      {id:3,name:"SHS SCHOOL UNIFORM FULL SET",price:1500,category:"Uniforms",img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9aGBqi_JG0COgxYDIK-uquLL1NRMXe4IPhQ&s",desc:"Complete Senior High School uniform set."},
+      {id:4,name:"Notebook Pack (5 pcs)",price:120,category:"Supplies",img:"https://images.unsplash.com/photo-1515879218367-8466d910aaa4",desc:"Assorted notebooks for all subjects."},
+      {id:5,name:"Lunch Meal - Rice + ulam",price:80,category:"Food",img:"https://images.unsplash.com/photo-1604908177522-7f3c90d6d8b3",desc:"Affordable campus lunch pack."},
+      {id:6,name:"Campus Backpack",price:980,category:"Accessories",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff",desc:"Durable backpack with laptop sleeve."}
+    ];
+
+    // Render products
+    const grid = document.getElementById('productGrid');
+    const resultCount = document.getElementById('resultCount');
+    function renderProducts(list){
+      grid.innerHTML = '';
+      if(!list.length){ grid.innerHTML = '<div style="color:#666">No products found</div>'; resultCount.textContent = '0 items'; return; }
+      resultCount.textContent = list.length + (list.length===1 ? ' item' : ' items');
+      list.forEach(p=>{
+        const el = document.createElement('div'); el.className='product';
+        el.innerHTML = `
+          <img src="${p.img}" alt="${p.name}">
+          <div class="p-title">${p.name}</div>
+          <div class="p-meta"><div class="p-price">₱${p.price}</div><div class="badge">${p.category}</div></div>
+          <div style="font-size:13px;color:#666;min-height:34px">${p.desc}</div>
+          <div class="prod-actions">
+            <button class="btn btn-outline" onclick="openQuickView(${p.id})">Quick View</button>
+            <button class="btn btn-primary" onclick="addToCartId(${p.id},1)">Add to Cart</button>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+    }
+    renderProducts(PRODUCTS);
+
+    // Category filter
+    function filterCategory(cat){
+      if(cat==='All') renderProducts(PRODUCTS);
+      else renderProducts(PRODUCTS.filter(p=>p.category===cat));
+    }
+
+    // Search with suggestions
+    const searchInput = document.getElementById('searchInput');
+    const suggestList = document.getElementById('suggestList');
+    searchInput.addEventListener('input', ()=>{
+      const q = searchInput.value.trim().toLowerCase();
+      if(!q){ suggestList.style.display='none'; return; }
+      const matches = PRODUCTS.filter(p=>p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)).slice(0,6);
+      if(!matches.length){ suggestList.style.display='none'; return; }
+      suggestList.innerHTML = matches.map(m=>`<div style="padding:8px;border-bottom:1px solid #f1f1f1;cursor:pointer" onclick="selectSuggestion('${m.name.replace(/'/g,"\\'")}')">${m.name} <small style="color:#666">• ${m.category}</small></div>`).join('');
+      suggestList.style.display='block';
+    });
+    function selectSuggestion(val){ searchInput.value = val; suggestList.style.display='none'; doSearch(); }
+    document.addEventListener('click', (e)=>{ if(!e.target.closest('.suggestions') && !e.target.closest('.search')) suggestList.style.display='none'; });
+
+    // Search button
+    document.getElementById('searchBtn').addEventListener('click', doSearch);
+    searchInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') doSearch(); });
+    function doSearch(){
+      const q = searchInput.value.trim().toLowerCase();
+      if(!q){ renderProducts(PRODUCTS); return; }
+      const res = PRODUCTS.filter(p=>p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+      renderProducts(res);
+    }
+
+    // Hero carousel
+    (function heroCarousel(){
+      const slides = document.querySelectorAll('.hero-slide'); let i=0;
+      slides[i].classList.add('active');
+      setInterval(()=>{ slides[i].classList.remove('active'); i=(i+1)%slides.length; slides[i].classList.add('active'); },5000);
+    })();
+
+    // Cart logic with localStorage
+    let cart = JSON.parse(localStorage.getItem('ts_cart')||'[]');
+    const cartItemsEl = document.getElementById('cartItems'), cartTotalEl = document.getElementById('cartTotal'), floatCount = document.getElementById('floatCount');
+    function persist(){ localStorage.setItem('ts_cart', JSON.stringify(cart)); updateCartUI(); }
+    function updateCartUI(){
+      floatCount.textContent = cart.reduce((s,n)=>s+n.qty,0);
+      cartTotalEl.textContent = cart.reduce((s,i)=>s + i.qty * i.price, 0);
+      if(!cart.length){ cartItemsEl.innerHTML = '<div style="color:#666">Cart is empty</div>'; return; }
+      cartItemsEl.innerHTML = cart.map(it=>`
+        <div class="cart-item">
+          <img src="${it.img}" alt="${it.name}">
+          <div style="flex:1">
+            <div style="font-weight:700">${it.name}</div>
+            <div style="color:#666;font-size:13px">₱${it.price} • Qty: ${it.qty}</div>
+            <div style="margin-top:6px"><button class="btn btn-outline" onclick="changeQty(${it.id}, -1)">-</button> <button class="btn btn-outline" onclick="changeQty(${it.id}, 1)">+</button> <button class="btn btn-outline" onclick="removeItem(${it.id})">Remove</button></div>
+          </div>
+        </div>
+      `).join('');
+    }
+    function addToCartId(id, qty=1){
+      const p = PRODUCTS.find(x=>x.id===id); if(!p) return;
+      const existing = cart.find(c=>c.id===id);
+      if(existing) existing.qty += qty; else cart.push({id:p.id,name:p.name,price:p.price,qty,img:p.img});
+      persist(); alert(p.name + ' added to cart');
+    }
+    function changeQty(id, delta){
+      const it = cart.find(c=>c.id===id); if(!it) return;
+      it.qty += delta; if(it.qty<=0) cart = cart.filter(c=>c.id!==id);
+      persist();
+    }
+    function removeItem(id){ cart = cart.filter(c=>c.id!==id); persist(); }
+
+    // Quick view modal
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    function openQuickView(id){
+      const p = PRODUCTS.find(x=>x.id===id); if(!p) return;
+      document.getElementById('modalImg').src = p.img;
+      document.getElementById('modalTitle').textContent = p.name;
+      document.getElementById('modalPrice').textContent = '₱' + p.price;
+      document.getElementById('modalDesc').textContent = p.desc;
+      document.getElementById('modalQty').value = 1;
+      document.getElementById('modalAdd').onclick = ()=>{ addToCartId(p.id, Number(document.getElementById('modalQty').value)); closeModal(); }
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden','false');
+    }
+    function closeModal(){ modalBackdrop.style.display = 'none'; modalBackdrop.setAttribute('aria-hidden','true'); }
+
+    // Checkout placeholder
+    function checkout(){
+      if(!cart.length){ alert('Your cart is empty.'); return; }
+      alert('Checkout not implemented in this demo. Cart total: ₱' + cart.reduce((s,i)=>s+i.qty*i.price,0));
+    }
+
+    // Persist & UI init
+    persist();
+    // Open cart button behavior
+    document.getElementById('openCart').addEventListener('click',()=>{ window.scrollTo({top:0,behavior:'smooth'}); document.querySelector('aside').scrollIntoView({behavior:'smooth'}); });
+
+    // Expose a couple functions for inline buttons
+    window.addToCartId = addToCartId;
+    window.openQuickView = openQuickView;
+    window.changeQty = changeQty;
+    window.removeItem = removeItem;
+    window.filterCategory = filterCategory;
+    window.checkout = checkout;
+    window.closeModal = closeModal;
+  </script>
+</body>
+</html>

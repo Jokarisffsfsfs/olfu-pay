@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile - TransacSure Market</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/png" href="OLFU.jpg">
+  <style>
+    :root{
+      --primary1:#0bab64; --primary2:#3bb78f; --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --radius:8px;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Arial, sans-serif;margin:0;background:#fafafa;color:#222}
+
+    /* Topbar (same as TransacSure) */
+    .topbar{background:linear-gradient(135deg,var(--primary1),var(--primary2));color:#fff;padding:8px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;z-index:60}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:40px;height:40px;border-radius:6px;object-fit:cover}
+    .brand .title{font-weight:700;font-size:20px}
+    .nav-links{display:flex;gap:14px;align-items:center}
+    .nav-links a{color:rgba(255,255,255,0.95);text-decoration:none;font-weight:600}
+    .nav-actions{display:flex;gap:8px;align-items:center}
+
+    /* page layout */
+    .container{max-width:1200px;margin:20px auto;padding:0 12px;display:grid;grid-template-columns: 320px 1fr;gap:18px}
+    @media(max-width:980px){ .container{grid-template-columns:1fr} .profile-card{margin:0 auto} }
+
+    .profile-card{background:#fff;padding:18px;border-radius:12px;box-shadow:var(--card-shadow);text-align:center}
+    .profile-card img{width:96px;height:96px;border-radius:50%;object-fit:cover;margin-bottom:10px}
+    .profile-card h2{margin:6px 0}
+    .profile-card p{margin:4px 0;color:#666}
+
+    .section{background:#fff;border-radius:12px;padding:14px;box-shadow:var(--card-shadow)}
+    .section h3{margin-top:0}
+    .btn{border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+    .btn-primary{background:linear-gradient(135deg,var(--primary1),var(--primary2));color:#fff}
+    .btn-outline{background:#fff;border:1px solid #ddd}
+
+    .categories-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    .category-pill{background:#fff;padding:8px 12px;border-radius:999px;border:1px solid #e6efe9;color:var(--primary1);font-weight:700;cursor:pointer;box-shadow:var(--card-shadow);font-size:14px}
+
+    .orders-list .order-item{display:flex;gap:12px;padding:10px;border-bottom:1px dashed #eee;align-items:center}
+    .orders-list .order-item img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+    .orders-empty{color:#666;padding:12px;text-align:center}
+
+    footer{background:#222;color:#fff;padding:18px;text-align:center;margin-top:28px;border-top:4px solid rgba(255,255,255,0.03)}
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">
+      <img src="OLFU.jpg" alt="OLFU">
+      <div>
+        <div class="title">TransacSure</div>
+        <div style="font-size:12px;opacity:.9">Trusted Marketplace for OLFU Students</div>
+      </div>
+    </div>
+
+    <div class="nav-links" aria-hidden>
+      <a href="TransacSure.html">Home</a>
+      <a href="Categories.html">Categories</a>
+      <a href="Deals.html">Deals</a>
+      <a href="Profile.html">Profile</a>
+    </div>
+
+    <div class="nav-actions">
+      <div style="font-weight:700" id="greetName">Welcome</div>
+      <div class="cart-float" id="openCart" title="Open cart">🛒 <span class="cart-count" id="floatCount">0</span></div>
+    </div>
+  </div>
+
+  <!-- category quick-nav -->
+  <div style="max-width:1200px;margin:12px auto;padding:0 12px">
+    <div class="categories-row" id="topCategories">
+      <div class="category-pill" onclick="location.href='Categories.html?category=Books'">📚 Books</div>
+      <div class="category-pill" onclick="location.href='Categories.html?category=Uniforms'">👕 Uniforms</div>
+      <div class="category-pill" onclick="location.href='Categories.html?category=Supplies'">✏️ Supplies</div>
+      <div class="category-pill" onclick="location.href='Categories.html?category=Food'">🍱 Food</div>
+      <div class="category-pill" onclick="location.href='Categories.html?category=Accessories'">🎒 Accessories</div>
+      <div class="category-pill" onclick="location.href='Categories.html?category=Electronics'">🔌 Electronics</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- left: profile card -->
+    <div>
+      <div class="profile-card section" id="profileCard">
+        <img id="profilePic" src="https://via.placeholder.com/96" alt="Profile">
+        <h2 id="profileName">Student Name</h2>
+        <p id="profileRole">Student</p>
+        <p id="profileEmail" style="font-size:13px;color:#666"></p>
+        <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+          <button class="btn btn-primary" id="editBtn">Edit Profile</button>
+          <button class="btn btn-outline" id="logoutBtn">Log Out</button>
+        </div>
+
+        <div id="editForm" style="display:none;margin-top:12px;text-align:left">
+          <label style="font-size:13px;color:#444">Name</label>
+          <input id="inputName" style="width:100%;padding:8px;border-radius:8px;border:1px solid #eee;margin:6px 0">
+          <label style="font-size:13px;color:#444">Email</label>
+          <input id="inputEmail" style="width:100%;padding:8px;border-radius:8px;border:1px solid #eee;margin:6px 0">
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+            <button class="btn btn-outline" id="cancelEdit">Cancel</button>
+            <button class="btn btn-primary" id="saveEdit">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top:12px">
+        <h3>Account</h3>
+        <p style="color:#666;margin:6px 0">Member since: <span id="memberSince">—</span></p>
+        <p style="color:#666;margin:6px 0">Verified: <strong id="verifiedStatus">No</strong></p>
+      </div>
+    </div>
+
+    <!-- right: orders and cart summary -->
+    <div>
+      <div class="section">
+        <h3>My Orders</h3>
+        <div class="orders-list" id="ordersList">
+          <div class="orders-empty">No orders yet. Add items from the marketplace.</div>
+        </div>
+      </div>
+
+      <div class="section" style="margin-top:12px">
+        <h3>Cart Summary</h3>
+        <div id="cartSummary">
+          <div style="color:#666">Cart is empty</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px">
+          <div style="font-weight:800">Total: ₱<span id="cartTotal">0</span></div>
+          <div>
+            <button class="btn btn-outline" onclick="location.href='Categories.html'">Continue Shopping</button>
+            <button class="btn btn-primary" onclick="checkout()">Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Our Lady of Fatima University - TransacSure Market
+  </footer>
+
+  <script>
+    // profile data (stored in localStorage)
+    const PROFILE_KEY = 'ts_profile';
+    const DEFAULT_PROFILE = { name: 'John Mark D Lontajo', email: 'lontajo136534140574depedqc.ph@gmail.com', role:'Senior High Student', pic: 'https://via.placeholder.com/96', memberSince: '2024' };
+
+    function loadProfile(){
+      const p = JSON.parse(localStorage.getItem(PROFILE_KEY) || JSON.stringify(DEFAULT_PROFILE));
+      document.getElementById('profileName').textContent = p.name;
+      document.getElementById('profileEmail').textContent = p.email;
+      document.getElementById('profileRole').textContent = p.role;
+      document.getElementById('profilePic').src = p.pic;
+      document.getElementById('greetName').textContent = 'Welcome, ' + p.name.split(' ')[0];
+      document.getElementById('memberSince').textContent = p.memberSince || '—';
+      document.getElementById('verifiedStatus').textContent = p.verified ? 'Yes' : 'No';
+      document.getElementById('inputName').value = p.name;
+      document.getElementById('inputEmail').value = p.email;
+    }
+
+    document.getElementById('editBtn').addEventListener('click', ()=>{ document.getElementById('editForm').style.display='block'; });
+    document.getElementById('cancelEdit').addEventListener('click', ()=>{ document.getElementById('editForm').style.display='none'; loadProfile(); });
+    document.getElementById('saveEdit').addEventListener('click', ()=>{
+      const name = document.getElementById('inputName').value.trim() || DEFAULT_PROFILE.name;
+      const email = document.getElementById('inputEmail').value.trim() || DEFAULT_PROFILE.email;
+      const data = {...DEFAULT_PROFILE, name, email, verified:false};
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(data));
+      document.getElementById('editForm').style.display='none';
+      loadProfile();
+      alert('Profile updated');
+    });
+    document.getElementById('logoutBtn').addEventListener('click', ()=>{ alert('Logged out (demo)'); });
+
+    // cart/orders (shared with TransacSure)
+    let cart = JSON.parse(localStorage.getItem('ts_cart')||'[]');
+    const floatCount = document.getElementById('floatCount');
+    const cartSummaryEl = document.getElementById('cartSummary');
+    const ordersListEl = document.getElementById('ordersList');
+    const cartTotalEl = document.getElementById('cartTotal');
+
+    function updateCartUI(){
+      floatCount.textContent = cart.reduce((s,n)=>s+n.qty,0);
+      cartTotalEl.textContent = cart.reduce((s,i)=>s + i.qty * i.price, 0);
+      if(!cart.length){
+        cartSummaryEl.innerHTML = '<div style="color:#666">Cart is empty</div>';
+        ordersListEl.innerHTML = '<div class="orders-empty">No orders yet. Add items from the marketplace.</div>';
+        return;
+      }
+      // cart summary
+      cartSummaryEl.innerHTML = cart.map(it=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed #eee">
+          <img src="${it.img}" style="width:50px;height:50px;object-fit:cover;border-radius:6px">
+          <div style="flex:1">
+            <div style="font-weight:700">${it.name}</div>
+            <div style="color:#666;font-size:13px">₱${it.price} • Qty: ${it.qty}</div>
+          </div>
+          <div style="text-align:right">₱${it.qty * it.price}</div>
+        </div>
+      `).join('');
+
+      // orders (simple view of cart as "orders" placeholder)
+      ordersListEl.innerHTML = cart.map(it=>`
+        <div class="order-item">
+          <img src="${it.img}" alt="${it.name}">
+          <div style="flex:1">
+            <div style="font-weight:700">${it.name}</div>
+            <div style="color:#666;font-size:13px">Qty: ${it.qty} • ₱${it.price}</div>
+            <div style="margin-top:6px"><button class="btn btn-outline" onclick="changeQty(${it.id},-1)">-</button> <button class="btn btn-outline" onclick="changeQty(${it.id},1)">+</button> <button class="btn btn-outline" onclick="removeItem(${it.id})">Remove</button></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function persistCart(){ localStorage.setItem('ts_cart', JSON.stringify(cart)); updateCartUI(); }
+
+    function changeQty(id, delta){
+      const it = cart.find(c=>c.id===id); if(!it) return;
+      it.qty += delta; if(it.qty<=0) cart = cart.filter(c=>c.id!==id);
+      persistCart();
+    }
+    function removeItem(id){ cart = cart.filter(c=>c.id!==id); persistCart(); }
+    function checkout(){ if(!cart.length){ alert('Cart is empty'); return; } alert('Checkout not implemented. Total: ₱' + cart.reduce((s,i)=>s+i.qty*i.price,0)); }
+
+    // init
+    loadProfile();
+    updateCartUI();
+
+    // openCart smooth scroll behavior
+    document.getElementById('openCart').addEventListener('click', ()=>{ window.scrollTo({top:0,behavior:'smooth'}); document.querySelector('.container').scrollIntoView({behavior:'smooth'}); });
+
+    // expose for inline buttons
+    window.changeQty = changeQty;
+    window.removeItem = removeItem;
+    window.checkout = checkout;
+  </script>
+</body>
+</html>

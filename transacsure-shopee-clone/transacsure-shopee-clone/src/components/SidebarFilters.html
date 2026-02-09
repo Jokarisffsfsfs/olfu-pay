@@ -1,0 +1,41 @@
+<div class="sidebar-filters">
+  <h2>Filter Products</h2>
+  <div class="filter-category">
+    <h3>Categories</h3>
+    <ul>
+      <li><input type="checkbox" id="category1" name="category" value="Electronics"><label for="category1"> Electronics</label></li>
+      <li><input type="checkbox" id="category2" name="category" value="Fashion"><label for="category2"> Fashion</label></li>
+      <li><input type="checkbox" id="category3" name="category" value="Home"><label for="category3"> Home</label></li>
+      <li><input type="checkbox" id="category4" name="category" value="Beauty"><label for="category4"> Beauty</label></li>
+      <li><input type="checkbox" id="category5" name="category" value="Sports"><label for="category5"> Sports</label></li>
+    </ul>
+  </div>
+  
+  <div class="filter-price">
+    <h3>Price Range</h3>
+    <input type="range" id="priceRange" name="price" min="0" max="10000" step="100" value="5000">
+    <label for="priceRange">Up to ₱<span id="priceValue">5000</span></label>
+  </div>
+  
+  <div class="filter-rating">
+    <h3>Rating</h3>
+    <ul>
+      <li><input type="radio" id="rating1" name="rating" value="5"><label for="rating1"> 5 Stars</label></li>
+      <li><input type="radio" id="rating2" name="rating" value="4"><label for="rating2"> 4 Stars & Up</label></li>
+      <li><input type="radio" id="rating3" name="rating" value="3"><label for="rating3"> 3 Stars & Up</label></li>
+      <li><input type="radio" id="rating4" name="rating" value="2"><label for="rating4"> 2 Stars & Up</label></li>
+      <li><input type="radio" id="rating5" name="rating" value="1"><label for="rating5"> 1 Star & Up</label></li>
+    </ul>
+  </div>
+  
+  <button id="applyFilters">Apply Filters</button>
+</div>
+
+<script>
+  const priceRange = document.getElementById('priceRange');
+  const priceValue = document.getElementById('priceValue');
+
+  priceRange.addEventListener('input', function() {
+    priceValue.textContent = priceRange.value;
+  });
+</script>

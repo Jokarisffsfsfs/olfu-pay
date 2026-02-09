@@ -1,0 +1,66 @@
+<div class="categories-grid">
+  <h2>Shop by Categories</h2>
+  <div class="grid-container">
+    <div class="category-card">
+      <a href="uniforms.html">
+        <img src="https://example.com/uniforms.jpg" alt="Uniforms">
+        <h3>Uniforms</h3>
+      </a>
+    </div>
+    <div class="category-card">
+      <a href="supplies.html">
+        <img src="https://example.com/supplies.jpg" alt="Supplies">
+        <h3>Supplies</h3>
+      </a>
+    </div>
+    <div class="category-card">
+      <a href="books.html">
+        <img src="https://example.com/books.jpg" alt="Books">
+        <h3>Books</h3>
+      </a>
+    </div>
+    <div class="category-card">
+      <a href="food.html">
+        <img src="https://example.com/food.jpg" alt="Food">
+        <h3>Food</h3>
+      </a>
+    </div>
+    <div class="category-card">
+      <a href="accessories.html">
+        <img src="https://example.com/accessories.jpg" alt="Accessories">
+        <h3>Accessories</h3>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .categories-grid {
+    padding: 20px;
+    text-align: center;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
+  .category-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  .category-card:hover {
+    transform: scale(1.05);
+  }
+  .category-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+  }
+  .category-card h3 {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+</style>

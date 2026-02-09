@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Second-Hand OLFU SHS Uniform</title>
+    <link rel="icon" type="image/png" href="OLFU.jpg">
+  <link rel="icon" type="image/png" href="OLFU.jpg">
+  <style>
+    :root{
+      --g1:#0bab64; --g2:#3bb78f;
+      --red:#e63946; --amber:#ffb703; --ink:#222; --muted:#555; --card:#fff; --bg:#f5f5f5;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Arial, Helvetica, sans-serif; background:var(--bg); color:#333;
+    }
+
+    /* Header */
+    header{
+      background:linear-gradient(135deg,var(--g1),var(--g2));
+      color:#fff; padding:20px; text-align:center; position:relative;
+    }
+    header h1{margin:0}
+    .home-btn{
+      position:absolute; right:20px; top:20px;
+      background:#fff; color:var(--g1); padding:8px 14px; border-radius:8px;
+      text-decoration:none; font-weight:700; transition:.25s; box-shadow:0 2px 6px rgba(0,0,0,.15);
+    }
+    .home-btn:hover{background:var(--g1); color:#fff}
+
+    /* Container + product layout */
+    .container{
+      max-width:1000px; margin:26px auto; padding:20px; background:var(--card);
+      border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,.1);
+    }
+    .product{display:flex; flex-wrap:wrap; gap:22px}
+    .product img{
+      width:100%; max-width:300px; border-radius:12px;
+      box-shadow:0 3px 10px rgba(0,0,0,.18); background:#fff; object-fit:cover;
+    }
+    .product-info{flex:1; min-width:260px}
+    .product-info h2{margin:6px 0 8px; color:var(--g1)}
+    .condition{
+      display:inline-block; background:var(--amber); color:#fff; padding:4px 10px; border-radius:6px; font-size:13px; font-weight:700;
+    }
+    .desc{color:var(--muted); line-height:1.55; margin:10px 0 6px}
+    .price{font-size:28px; color:var(--red); font-weight:800; margin:12px 0}
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0}
+    .pill{
+      background:#eef6f2; border:1px solid #d6ede1; padding:8px 10px; border-radius:8px; font-size:14px;
+    }
+
+    .btn{
+      display:inline-block; padding:12px 18px; border-radius:10px; text-decoration:none; color:#fff; font-weight:700;
+      transition:transform .08s ease, filter .2s ease; cursor:pointer; border:none;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.buy{background:linear-gradient(135deg,var(--g1),var(--g2))}
+    .btn.chat{background:#2e8b72}
+    .btn:hover{filter:brightness(.95)}
+
+    /* Seller profile */
+    .seller-box{
+      display:flex; align-items:center; gap:14px; margin-top:22px; padding:16px 0; border-top:1px solid #e7e7e7;
+    }
+    .seller-box img{
+      width:70px; height:70px; border-radius:50%; object-fit:cover;
+      border:2px solid var(--g1);
+    }
+    .seller-info h3{margin:0 0 4px; font-size:18px}
+    .seller-info p{margin:2px 0; color:var(--muted); font-size:14px}
+
+    /* Footer */
+    footer{ text-align:center; padding:16px; color:#fff; background:#1f4037; margin-top:28px }
+
+    /* Chat widget */
+    .chat-toggle{
+      position:fixed; right:20px; bottom:20px; width:54px; height:54px; border-radius:50%;
+      background:linear-gradient(135deg,var(--g1),var(--g2)); color:#fff; border:none; cursor:pointer;
+      box-shadow:0 6px 14px rgba(0,0,0,.25); font-size:20px;
+    }
+    .chat-box{
+      position:fixed; right:20px; bottom:88px; width:320px; max-width:calc(100vw - 40px);
+      background:#fff; border:1px solid #e5e5e5; border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.18);
+      display:none; flex-direction:column; overflow:hidden;
+    }
+    .chat-header{
+      background:linear-gradient(135deg,var(--g1),var(--g2)); color:#fff; padding:10px 12px;
+      display:flex; align-items:center; justify-content:space-between; font-weight:700;
+    }
+    .chat-messages{
+      height:240px; overflow-y:auto; padding:10px 12px; background:#fafafa;
+    }
+    .msg{margin:8px 0; max-width:78%}
+    .msg.you{margin-left:auto; text-align:right}
+    .bubble{
+      display:inline-block; padding:8px 10px; border-radius:10px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.06);
+    }
+    .you .bubble{background:#e8fff3}
+    .chat-input{display:flex; gap:8px; padding:10px; border-top:1px solid #eee; background:#fff}
+    .chat-input input{
+      flex:1; padding:10px 12px; border:1px solid #ddd; border-radius:8px; outline:none;
+    }
+    .chat-input button{padding:10px 14px; border:none; border-radius:8px; background:var(--g1); color:#fff; font-weight:700; cursor:pointer}
+
+    /* Responsive */
+    @media (max-width:640px){
+      .price{font-size:24px}
+      .product img{max-width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>👚 Second-Hand OLFU SHS Uniform</h1>
+    <a class="home-btn" href="TransacSure.html">🏠 Home</a>
+  </header>
+
+  <main class="container">
+    <section class="product">
+      <!-- Replace the src with your actual image filename or URL -->
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9aGBqi_JG0COgxYDIK-uquLL1NRMXe4IPhQ&s" alt="OLFU SHS Uniform">
+
+      <div class="product-info">
+        <h2>OLFU SHS Female Uniform</h2>
+        <span class="condition">Used · Good Condition</span>
+
+        <p class="desc">
+          Pre-loved OLFU Senior High School uniform — no tears, zipper OK, light signs of wear.
+          Washed and ready for pickup. Great option for incoming SHS students looking to save.
+        </p>
+
+        <div class="row">
+          <span class="pill">Set: Blouse + Vest + Skirt</span>
+          <span class="pill">Color: Navy / Light Gray</span>
+        </div>
+
+        <div class="row" aria-label="Size options">
+          <strong>Sizes:</strong>
+          <label class="pill"><input type="radio" name="size" value="S" checked> S</label>
+          <label class="pill"><input type="radio" name="size" value="M"> M</label>
+          <label class="pill"><input type="radio" name="size" value="L"> L</label>
+        </div>
+
+        <p class="price">₱500.00</p>
+
+        <div class="row">
+          <a class="btn buy" href="#">🛒 Buy Now</a>
+          <button class="btn chat" onclick="toggleChat()">💬 Chat Seller</button>
+        </div>
+
+        <!-- Seller -->
+        <div class="seller-box">
+          <img src="https://www.facebook.com/photo/?fbid=1005526171366198&set=pob.100057264727476" alt="Seller profile">
+          <div class="seller-info">
+            <h3>Alnasser Adil</h3>
+            <p>🎓 Student, Our Lady of Fatima University</p>
+            <p>📍 Quezon City</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Chat Button -->
+  <button class="chat-toggle" title="Chat with Seller" onclick="toggleChat()">💬</button>
+
+  <!-- Chat Box -->
+  <aside class="chat-box" id="chatBox" aria-label="Chat with seller">
+    <div class="chat-header">
+      <span>Chat with Seller</span>
+      <button onclick="toggleChat()" style="background:none;border:none;color:#fff;font-size:18px;cursor:pointer">✖</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg seller"><span class="bubble"><strong>Seller:</strong> Hi! The uniform is available. 😊</span></div>
+    </div>
+    <div class="chat-input">
+      <input id="chatInput" placeholder="Type a message…" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </aside>
+
+  <footer>© 2025 Student Marketplace · Powered by TransacSure</footer>
+
+  <script>
+    // Open/close chat
+    function toggleChat(){
+      const box = document.getElementById('chatBox');
+      box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    // Send message + save to localStorage
+    function sendMessage(){
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if(!text) return;
+      appendMsg('you', text);
+      input.value = '';
+      saveMessage({ who:'you', text, ts: Date.now() });
+      // Optional seller auto-reply demo:
+      setTimeout(() => {
+        const reply = "Got it! When would you like to meet?";
+        appendMsg('seller', reply);
+        saveMessage({ who:'seller', text: reply, ts: Date.now() });
+      }, 600);
+    }
+
+    function appendMsg(who, text){
+      const wrap = document.getElementById('chatMessages');
+      const row = document.createElement('div');
+      row.className = 'msg ' + (who === 'you' ? 'you' : 'seller');
+      row.innerHTML = `<span class="bubble">${who==='you' ? '<strong>You:</strong> ' : '<strong>Seller:</strong> '}${escapeHtml(text)}</span>`;
+      wrap.appendChild(row);
+      wrap.scrollTop = wrap.scrollHeight;
+    }
+
+    // Persist chat
+    const KEY='olfu-uniform-chat';
+    function saveMessage(m){ 
+      const arr = JSON.parse(localStorage.getItem(KEY) || '[]'); 
+      arr.push(m); 
+      localStorage.setItem(KEY, JSON.stringify(arr)); 
+    }
+    function loadChat(){
+      try{
+        const arr = JSON.parse(localStorage.getItem(KEY) || '[]');
+        if(arr.length){
+          document.getElementById('chatMessages').innerHTML='';
+          arr.forEach(m => appendMsg(m.who, m.text));
+        }
+      }catch(e){}
+    }
+    function escapeHtml(s){ return s.replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])) }
+    window.addEventListener('load', loadChat);
+  </script>
+</body>
+</html>

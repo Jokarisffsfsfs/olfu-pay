@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "PHYSICS 1",
+    "price": 400,
+    "image": "https://img.lazcdn.com/g/ff/kf/Sd1640d1f28c644988e547bc33216ce24E.jpg_360x360q75.jpg_.webp",
+    "description": "A comprehensive guide to Physics concepts and principles."
+  },
+  {
+    "id": 2,
+    "name": "PHILOSOPHY",
+    "price": 400,
+    "image": "https://ins-poas.nlp.gov.ph/system/files/2024-07/Essentials%20of%20Philo.jpg",
+    "description": "An essential text for understanding philosophical theories and ideas."
+  },
+  {
+    "id": 3,
+    "name": "SHS SCHOOL UNIFORM FULL SET",
+    "price": 1500,
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9aGBqi_JG0COgxYDIK-uquLL1NRMXe4IPhQ&s",
+    "description": "Complete set of school uniform for Senior High School students."
+  },
+  {
+    "id": 4,
+    "name": "Mathematics for Senior High School",
+    "price": 450,
+    "image": "https://example.com/images/math_book.jpg",
+    "description": "A detailed textbook covering all essential mathematics topics."
+  },
+  {
+    "id": 5,
+    "name": "Biology Essentials",
+    "price": 500,
+    "image": "https://example.com/images/biology_book.jpg",
+    "description": "An engaging textbook that covers key concepts in biology."
+  },
+  {
+    "id": 6,
+    "name": "Art Supplies Set",
+    "price": 750,
+    "image": "https://example.com/images/art_supplies.jpg",
+    "description": "A complete set of art supplies for students and hobbyists."
+  },
+  {
+    "id": 7,
+    "name": "Healthy Snacks Pack",
+    "price": 300,
+    "image": "https://example.com/images/healthy_snacks.jpg",
+    "description": "A pack of nutritious snacks perfect for students."
+  },
+  {
+    "id": 8,
+    "name": "Stylish Backpack",
+    "price": 1200,
+    "image": "https://example.com/images/backpack.jpg",
+    "description": "A fashionable and functional backpack for school."
+  }
+]
