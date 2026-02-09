@@ -1,37 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>OLFU Pay — Home</title>
-    <style>
-      body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:40px;color:#111}
-      h1{margin-bottom:8px}
-      ul{line-height:1.9}
-      a{color:#0a6ef0;text-decoration:none}
-      a:hover{text-decoration:underline}
-      .note{margin-top:24px;color:#555}
-    </style>
-  </head>
-  <body>
-    <h1>OLFU Pay</h1>
-    <p>Welcome — quick links to available pages in this folder:</p>
-    <ul>
-      <li><a href="Accessories.html">Accessories</a></li>
-      <li><a href="books.html">Books</a></li>
-      <li><a href="Categories.html">Categories</a></li>
-      <li><a href="Deals.html">Deals</a></li>
-      <li><a href="Electronics.html">Electronics</a></li>
-      <li><a href="Food.html">Food</a></li>
-      <li><a href="LOG IN.html">Log In</a></li>
-      <li><a href="Profile.html">Profile</a></li>
-      <li><a href="Signup.html">Sign Up</a></li>
-      <li><a href="SHS uniform.html">SHS Uniform</a></li>
-      <li><a href="Supplies.html">Supplies</a></li>
-      <li><a href="TransacSure.html">TransacSure</a></li>
-      <li><a href="Philosophy.html">Philosophy</a></li>
-      <li><a href="Physics book.html">Physics Book</a></li>
-    </ul>
-    <p class="note">Also available: <a href="transacsure-shopee-clone/public/index.html">transacsure-shopee-clone</a></p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Login - TransacSure Market</title>
+  <link rel="icon" type="image/png" href="OLFU.jpg">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      background: 
+        linear-gradient(135deg, rgba(11,171,100,0.8), rgba(59,183,143,0.8)),
+        url("OLFU BUILDING.PNG") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-container h1 {
+      margin-bottom: 20px;
+      color: #007a3d;
+      font-size: 26px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: #00a651;
+    }
+
+    .btn {
+      background: #00a651;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #007a3d;
+      transform: scale(1.02);
+    }
+
+    .extra {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .extra a {
+      color: #00a651;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .extra a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h1>Login / Register</h1>
+  <form onsubmit="goHome(event)">
+    <div class="form-group">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" placeholder="Enter your full name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+    </div>
+
+    <div class="form-group">
+      <label for="role">I am a</label>
+      <select id="role" required>
+        <option value="">-- Select your role --</option>
+        <option value="student">Student</option>
+        <option value="worker">Worker</option>
+        <option value="visitor">Visitor</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn">Login</button>
+
+    <div class="extra">
+      Don’t have an account? <a href="Signup.html">Sign up</a>
+    </div>
+  </form>
+</div>
+
+<script>
+  function goHome(event) {
+    event.preventDefault(); // stops form refresh
+    window.location.href = "TransacSure.html"; // redirect to homepage
+  }
+</script>
+
+</body>
 </html>
