@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Verify Identity - TransacSure Market</title>
+  <title>Sign Up - TransacSure Market</title>
   <link rel="icon" type="image/png" href="OLFU.jpg">
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,167 +17,61 @@
         linear-gradient(135deg, rgba(11,171,100,0.8), rgba(59,183,143,0.8)),
         url("OLFU BUILDING.PNG") no-repeat center center fixed;
       background-size: cover;
-      padding: 20px;
     }
 
-    .verification-container {
+    .login-container {
       background: #fff;
-      padding: 40px;
+      padding: 30px;
       border-radius: 16px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.3);
       width: 100%;
-      max-width: 500px;
+      max-width: 400px;
       text-align: center;
     }
 
-    .verification-container h1 {
-      margin-bottom: 10px;
+    .login-container h1 {
+      margin-bottom: 20px;
       color: #007a3d;
-      font-size: 28px;
-    }
-
-    .verification-container p {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 30px;
+      font-size: 26px;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       text-align: left;
     }
 
     .form-group label {
       font-size: 14px;
       font-weight: bold;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: block;
-      color: #333;
     }
 
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group input, .form-group select {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
       font-size: 14px;
       outline: none;
       transition: border-color 0.3s;
-      box-sizing: border-box;
     }
 
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    .form-group input:focus, .form-group select:focus {
       border-color: #00a651;
-      box-shadow: 0 0 4px rgba(0, 166, 81, 0.2);
     }
 
-    .role-selector {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .role-option {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .role-option:hover {
-      border-color: #00a651;
-      background: #f0f9f5;
-    }
-
-    .role-option input[type="radio"] {
-      cursor: pointer;
-      width: auto;
-    }
-
-    .role-option input[type="radio"]:checked + label {
-      color: #00a651;
-      font-weight: bold;
-    }
-
-    .role-option label {
-      margin: 0;
-      cursor: pointer;
-      flex: 1;
-    }
-
-    .face-recognition {
-      margin: 25px 0;
-      padding: 20px;
-      background: #f5f5f5;
-      border-radius: 8px;
-      border: 2px dashed #ccc;
-    }
-
-    .face-recognition h3 {
-      color: #007a3d;
-      margin-top: 0;
-      font-size: 16px;
-    }
-
-    #camera {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 8px;
-      margin: 10px 0;
-      display: none;
-      background: #000;
-    }
-
-    #canvas {
-      display: none;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    #capturedImage {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 8px;
-      margin: 10px 0;
-      display: none;
-    }
-
-    .camera-controls {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 10px 0;
-    }
-
-    .btn, .btn-secondary, .btn-small {
+    .btn {
       background: #00a651;
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 12px;
+      width: 100%;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
       transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn-secondary {
-      background: #666;
-    }
-
-    .btn-secondary:hover {
-      background: #555;
-    }
-
-    .btn-small {
-      padding: 8px 15px;
-      font-size: 13px;
     }
 
     .btn:hover {
@@ -185,55 +79,8 @@
       transform: scale(1.02);
     }
 
-    .btn-small:hover {
-      background: #007a3d;
-      transform: scale(1.01);
-    }
-
-    .btn:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .file-upload-wrapper {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .file-upload-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: #f0f9f5;
-      border: 2px dashed #00a651;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 14px;
-      color: #333;
-    }
-
-    .file-upload-label:hover {
-      background: #e8f5f0;
-      border-color: #007a3d;
-    }
-
-    .file-upload-input {
-      display: none;
-    }
-
-    .file-name {
-      color: #00a651;
-      font-weight: bold;
-      margin-top: 8px;
-      font-size: 13px;
-    }
-
     .extra {
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 14px;
     }
 
@@ -247,353 +94,100 @@
       text-decoration: underline;
     }
 
+    .terms {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+
     .error {
       color: #c62828;
       font-size: 13px;
       margin-top: 8px;
       text-align: left;
     }
-
-    .success {
-      color: #00a651;
-      font-size: 13px;
-      margin-top: 8px;
-      text-align: left;
-    }
-
-    .section-title {
-      color: #007a3d;
-      font-size: 16px;
-      font-weight: bold;
-      margin: 25px 0 15px 0;
-      border-bottom: 2px solid #e0e0e0;
-      padding-bottom: 10px;
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    .status-incomplete {
-      background: #ffebee;
-      color: #c62828;
-    }
-
-    .status-complete {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    @media (max-width: 600px) {
-      .verification-container {
-        padding: 25px;
-      }
-
-      .role-selector {
-        grid-template-columns: 1fr;
-      }
-
-      .camera-controls {
-        flex-direction: column;
-      }
-
-      .camera-controls button {
-        width: 100%;
-      }
-    }
   </style>
 </head>
 <body>
 
-<div class="verification-container">
-  <h1>Identity Verification</h1>
-  <p>Complete your verification to continue on TransacSure</p>
-
-  <form onsubmit="submitVerification(event)">
-    
-    <!-- Role Selection -->
-    <div class="section-title">Step 1: Select Your Role</div>
+<div class="login-container">
+  <h1>Create Account</h1>
+  <form onsubmit="createAccount(event)">
     <div class="form-group">
-      <div class="role-selector">
-        <div class="role-option">
-          <input type="radio" id="student" name="role" value="student" required>
-          <label for="student">👨‍🎓 Student</label>
-        </div>
-        <div class="role-option">
-          <input type="radio" id="worker" name="role" value="worker" required>
-          <label for="worker">👨‍💼 Worker</label>
-        </div>
-      </div>
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" placeholder="Enter your full name" required>
     </div>
 
-    <!-- ID Number -->
-    <div class="section-title">Step 2: Submit Your Information</div>
     <div class="form-group">
-      <label for="idnumber">Your ID Number</label>
-      <input type="text" id="idnumber" placeholder="Enter your Student/Employee ID" required>
-      <span class="status-badge status-incomplete" id="idStatus">Incomplete</span>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
     </div>
 
-    <!-- Gmail -->
     <div class="form-group">
-      <label for="gmail">Gmail Address (Fatima's Account)</label>
-      <input type="email" id="gmail" placeholder="qc@student.fatima.edu.ph" required>
-      <span class="status-badge status-incomplete" id="gmailStatus">Incomplete</span>
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Create a password" required minlength="6">
     </div>
 
-    <!-- Valid ID Upload -->
     <div class="form-group">
-      <label>Upload Valid ID (Government/School/Company ID)</label>
-      <div class="file-upload-wrapper">
-        <label for="idfile" class="file-upload-label">
-          📷 Click to upload or drag & drop
-          <div style="font-size: 12px; color: #999; margin-top: 5px;">PNG, JPG, GIF up to 10MB</div>
-        </label>
-        <input type="file" id="idfile" class="file-upload-input" accept="image/*" required>
-      </div>
-      <div class="file-name" id="fileName" style="display: none;">✓ File selected</div>
-      <span class="status-badge status-incomplete" id="idFileStatus">Incomplete</span>
+      <label for="confirm">Confirm Password</label>
+      <input type="password" id="confirm" placeholder="Re-enter your password" required minlength="6">
     </div>
 
-    <!-- Face Recognition -->
-    <div class="section-title">Step 3: Face Recognition Verification</div>
-    <div class="face-recognition">
-      <h3>📸 Capture Your Face</h3>
-      <p style="font-size: 13px; color: #666; margin: 10px 0;">Enable your camera and capture a clear photo of your face for verification.</p>
-      
-      <video id="camera" autoplay playsinline></video>
-      <canvas id="canvas"></canvas>
-      <img id="capturedImage" alt="Captured face">
-
-      <div class="camera-controls">
-        <button type="button" id="startCameraBtn" class="btn-small" onclick="startCamera()">Start Camera</button>
-        <button type="button" id="captureFaceBtn" class="btn-small" style="display: none;" onclick="captureFace()">Capture Photo</button>
-        <button type="button" id="retakeFaceBtn" class="btn-small" style="display: none;" onclick="retakeFace()">Retake</button>
-      </div>
-      <span class="status-badge status-incomplete" id="faceStatus">Incomplete</span>
+    <div class="form-group">
+      <label for="role">I am a</label>
+      <select id="role" required>
+        <option value="">-- Select your role --</option>
+        <option value="student">Student</option>
+        <option value="worker">Worker</option>
+        <option value="visitor">Visitor</option>
+      </select>
     </div>
 
-    <!-- Error Message -->
-    <div id="error" class="error" aria-live="polite" style="display: none;"></div>
+    <div class="form-group terms">
+      <input type="checkbox" id="agree" required>
+      <label for="agree">I agree to the Terms & Conditions</label>
+    </div>
 
-    <!-- Submit Button -->
-    <button type="submit" class="btn" style="width: 100%; margin-top: 30px;">Submit Verification</button>
+    <div id="error" class="error" aria-live="polite" style="display:none;"></div>
+
+    <button type="submit" class="btn">Create Account</button>
 
     <div class="extra">
-      <a href="LOG IN.html">← Back to Home</a>
+      Already have an account? <a href="LOG IN.html">Log in</a>
     </div>
   </form>
 </div>
 
 <script>
-  let facePhotoCaptured = false;
-  let stream = null;
-
-  // Update status badges as user fills the form
-  document.getElementById('idnumber').addEventListener('input', function() {
-    updateIdStatus();
-  });
-
-  document.getElementById('gmail').addEventListener('input', function() {
-    updateGmailStatus();
-  });
-
-  document.getElementById('idfile').addEventListener('change', function() {
-    updateIdFileStatus();
-  });
-
-  function updateIdStatus() {
-    const idField = document.getElementById('idnumber').value.trim();
-    const badge = document.getElementById('idStatus');
-    if (idField.length > 0) {
-      badge.className = 'status-badge status-complete';
-      badge.textContent = '✓ Complete';
-    } else {
-      badge.className = 'status-badge status-incomplete';
-      badge.textContent = 'Incomplete';
-    }
-  }
-
-  function updateGmailStatus() {
-    const gmailField = document.getElementById('gmail').value.trim();
-    const badge = document.getElementById('gmailStatus');
-    if (gmailField.length > 0 && gmailField.includes('@gmail.com')) {
-      badge.className = 'status-badge status-complete';
-      badge.textContent = '✓ Complete';
-    } else {
-      badge.className = 'status-badge status-incomplete';
-      badge.textContent = 'Incomplete';
-    }
-  }
-
-  function updateIdFileStatus() {
-    const fileInput = document.getElementById('idfile');
-    const badge = document.getElementById('idFileStatus');
-    const fileName = document.getElementById('fileName');
-    
-    if (fileInput.files.length > 0) {
-      badge.className = 'status-badge status-complete';
-      badge.textContent = '✓ Complete';
-      fileName.style.display = 'block';
-    } else {
-      badge.className = 'status-badge status-incomplete';
-      badge.textContent = 'Incomplete';
-      fileName.style.display = 'none';
-    }
-  }
-
-  function startCamera() {
-    const video = document.getElementById('camera');
-    const startBtn = document.getElementById('startCameraBtn');
-    const captureBtn = document.getElementById('captureFaceBtn');
-    const errorEl = document.getElementById('error');
-
-    navigator.mediaDevices.getUserMedia({ 
-      video: { 
-        width: { ideal: 1280 },
-        height: { ideal: 720 },
-        facingMode: 'user'
-      } 
-    })
-    .then(function(mediaStream) {
-      stream = mediaStream;
-      video.srcObject = mediaStream;
-      video.style.display = 'block';
-      startBtn.style.display = 'none';
-      captureBtn.style.display = 'inline-block';
-      errorEl.style.display = 'none';
-    })
-    .catch(function(err) {
-      errorEl.textContent = 'Camera access denied. Please enable camera permissions.';
-      errorEl.style.display = 'block';
-      console.error('Camera error:', err);
-    });
-  }
-
-  function captureFace() {
-    const video = document.getElementById('camera');
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = document.getElementById('capturedImage');
-    const captureBtn = document.getElementById('captureFaceBtn');
-    const retakeBtn = document.getElementById('retakeFaceBtn');
-    const badge = document.getElementById('faceStatus');
-
-    // Set canvas dimensions to match video
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
-    // Draw video frame to canvas
-    ctx.drawImage(video, 0, 0);
-
-    // Convert canvas to image
-    const imageData = canvas.toDataURL('image/jpeg');
-    img.src = imageData;
-    img.style.display = 'block';
-
-    // Hide video, show image and retake button
-    video.style.display = 'none';
-    captureBtn.style.display = 'none';
-    retakeBtn.style.display = 'inline-block';
-
-    facePhotoCaptured = true;
-    badge.className = 'status-badge status-complete';
-    badge.textContent = '✓ Captured';
-
-    // Store the captured image for submission
-    document.getElementById('face-data').value = imageData;
-  }
-
-  function retakeFace() {
-    const video = document.getElementById('camera');
-    const img = document.getElementById('capturedImage');
-    const captureBtn = document.getElementById('captureFaceBtn');
-    const retakeBtn = document.getElementById('retakeFaceBtn');
-
-    img.style.display = 'none';
-    video.style.display = 'block';
-    captureBtn.style.display = 'inline-block';
-    retakeBtn.style.display = 'none';
-    facePhotoCaptured = false;
-  }
-
-  function submitVerification(event) {
+  function createAccount(event) {
     event.preventDefault();
 
-    const role = document.querySelector('input[name="role"]:checked').value;
-    const idNumber = document.getElementById('idnumber').value.trim();
-    const gmail = document.getElementById('gmail').value.trim();
-    const idFile = document.getElementById('idfile').files[0];
+    const pwd = document.getElementById('password').value.trim();
+    const confirm = document.getElementById('confirm').value.trim();
+    const agree = document.getElementById('agree').checked;
     const errorEl = document.getElementById('error');
 
     errorEl.style.display = 'none';
     errorEl.textContent = '';
 
-    // Validation
-    if (!role) {
-      errorEl.textContent = 'Please select your role (Student or Worker).';
+    if (pwd !== confirm) {
+      errorEl.textContent = 'Passwords do not match.';
       errorEl.style.display = 'block';
       return;
     }
 
-    if (!idNumber || idNumber.length < 3) {
-      errorEl.textContent = 'Please enter a valid ID number.';
+    if (!agree) {
+      errorEl.textContent = 'You must agree to the Terms & Conditions.';
       errorEl.style.display = 'block';
       return;
     }
 
-    if (!gmail || !gmail.includes('@gmail.com')) {
-      errorEl.textContent = 'Please enter a valid Gmail address.';
-      errorEl.style.display = 'block';
-      return;
-    }
-
-    if (!idFile) {
-      errorEl.textContent = 'Please upload a valid ID image.';
-      errorEl.style.display = 'block';
-      return;
-    }
-
-    if (!facePhotoCaptured) {
-      errorEl.textContent = 'Please capture a face photo for verification.';
-      errorEl.style.display = 'block';
-      return;
-    }
-
-    // All validation passed - simulate submission
-    // In a real app, you would send this data to your server
-    console.log({
-      role: role,
-      idNumber: idNumber,
-      gmail: gmail,
-      idFile: idFile.name,
-      facePhoto: 'captured'
-    });
-
-    // Show success message
-    alert('✓ Verification submitted successfully!\n\nThe developer will review your submission shortly.');
-    window.location.href = 'TransacSure.html';
+    // Here you would normally send the signup data to your server.
+    // For now, simulate success and redirect to verification page.
+    window.location.href = "Submit.html";
   }
-
-  // Add input hidden field for face data
-  const form = document.querySelector('form');
-  const faceDataInput = document.createElement('input');
-  faceDataInput.type = 'hidden';
-  faceDataInput.id = 'face-data';
-  faceDataInput.name = 'face-data';
-  form.appendChild(faceDataInput);
-
-  // Cleanup when page unloads
-  window.addEventListener('beforeunload', function() {
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-    }
-  });
 </script>
 
 </body>
+</html>
