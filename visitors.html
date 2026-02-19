@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Registration - TransacSure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            background: 
+                linear-gradient(135deg, rgba(11,171,100,0.8), rgba(59,183,143,0.8)),
+                url("OLFU BUILDING.PNG") no-repeat center center fixed;
+            background-size: cover;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #007a3d;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .content {
+            text-align: left;
+        }
+
+        .form-section {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            color: #007a3d;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="file"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        input[type="file"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #00a651;
+            box-shadow: 0 0 4px rgba(0, 166, 81, 0.2);
+        }
+
+        .required {
+            color: #c62828;
+        }
+
+        .info-box {
+            background: #f0f9f5;
+            border-left: 4px solid #00a651;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            color: #007a3d;
+            font-size: 13px;
+        }
+
+        .facial-recognition-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border: 2px dashed #ccc;
+        }
+
+        .camera-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        video {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            display: none;
+            background: #000;
+            border: 2px solid #00a651;
+        }
+
+        canvas {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        #capturedImage {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .detection-indicator {
+            color: #c62828;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .detection-indicator.success {
+            color: #00a651;
+        }
+
+        .captured-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .image-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            aspect-ratio: 1;
+        }
+
+        .image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #c62828;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+
+        .image-item:hover .remove-btn {
+            opacity: 1;
+        }
+
+        .camera-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        button {
+            background: #00a651;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #007a3d;
+            transform: scale(1.02);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #555;
+            transform: scale(1.02);
+        }
+
+        .submit-section {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .submit-section button {
+            flex: 1;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid;
+            font-size: 13px;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            border-color: #c62828;
+            color: #721c24;
+        }
+
+        .alert.info {
+            background: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .status-incomplete {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-complete {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .extra {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .extra a {
+            color: #00a651;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .extra a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #00a651;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #00a651;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .camera-controls {
+                flex-direction: column;
+            }
+
+            .camera-controls button {
+                width: 100%;
+            }
+
+            .submit-section {
+                flex-direction: column;
+            }
+
+            .submit-section button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Visitor Registration</h1>
+            <p>Register as a non-Fatima email user to access TransacSure</p>
+        </div>
+
+        <div class="content">
+            <div class="alert" id="alert"></div>
+
+            <form id="visitorForm">
+                <!-- Personal Information Section -->
+                <div class="section-title">Step 1: Personal Information</div>
+
+                <div class="info-box">
+                    ℹ️ Please provide accurate information for verification purposes.
+                </div>
+
+                <div class="form-group">
+                    <label for="fullName">Full Name <span class="required">*</span></label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+                    <span class="status-badge status-incomplete" id="fullNameStatus">Incomplete</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="+1 (555) 000-0000">
+                    <span class="status-badge status-incomplete" id="phoneStatus">Incomplete</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    <span class="status-badge status-incomplete" id="emailStatus">Incomplete</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                    <span class="status-badge status-incomplete" id="dobStatus">Incomplete</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose">Purpose of Registration <span class="required">*</span></label>
+                    <textarea id="purpose" name="purpose" required placeholder="Describe why you want to register..." rows="3"></textarea>
+                </div>
+
+                <!-- Documents Section -->
+                <div class="section-title">Step 2: Documentation</div>
+
+                <div class="form-group">
+                    <label for="birthCertificate">Birth Certificate <span class="required">*</span></label>
+                    <input type="file" id="birthCertificate" name="birthCertificate" accept="image/*,.pdf" required>
+                    <small style="color: #666; margin-top: 5px;">Accepted formats: PDF, JPG, PNG</small>
+                    <span class="status-badge status-incomplete" id="certStatus">Incomplete</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="additionalDocs">Additional Documents (Optional)</label>
+                    <input type="file" id="additionalDocs" name="additionalDocs" multiple accept="image/*,.pdf">
+                    <small style="color: #666; margin-top: 5px;">Upload ID, passport, or other supporting documents</small>
+                </div>
+
+                <!-- Reason Section -->
+                <div class="section-title">Step 3: Account Purpose</div>
+
+                <div class="form-group">
+                    <label for="applicationReason">Reason for Applying <span class="required">*</span></label>
+                    <select id="applicationReason" name="applicationReason" required>
+                        <option value="">-- Select an option --</option>
+                        <option value="sell">I want to SELL items</option>
+                        <option value="buy">I want to BUY items</option>
+                        <option value="both">I want to both SELL and BUY</option>
+                    </select>
+                    <span class="status-badge status-incomplete" id="reasonStatus">Incomplete</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessDetails">Business/Selling Details (if applicable)</label>
+                    <textarea id="businessDetails" name="businessDetails" placeholder="Describe what you want to sell or your business..." rows="3"></textarea>
+                </div>
+
+                <!-- Facial Recognition Section -->
+                <div class="section-title">Step 4: Facial Recognition & Verification</div>
+
+                <div class="info-box">
+                    📷 Please allow camera access and take clear photos for facial recognition verification. We need at least 3 photos from different angles.
+                </div>
+
+                <div class="facial-recognition-section">
+                    <h3 style="color: #007a3d; margin-bottom: 10px;">📸 Capture Your Face</h3>
+                    <p style="font-size: 13px; color: #666; margin: 10px 0;">Enable your camera and capture clear photos for verification.</p>
+
+                    <div class="camera-container">
+                        <video id="video" width="400" height="300" autoplay playsinline></video>
+                        <canvas id="canvas" width="400" height="300"></canvas>
+                        <img id="capturedImage" alt="Captured photo">
+
+                        <div id="cameraStatus" style="text-align: center; color: #666; font-size: 13px;">
+                            Click "Start Camera" to begin facial recognition
+                        </div>
+
+                        <div class="detection-indicator" id="detectionStatus">
+                            No face detected
+                        </div>
+
+                        <div class="camera-controls">
+                            <button type="button" id="startCameraBtn">Start Camera</button>
+                            <button type="button" id="captureFaceBtn" disabled style="display: none;">Capture Photo</button>
+                            <button type="button" id="stopCameraBtn" style="display: none;">Stop Camera</button>
+                        </div>
+
+                        <div class="loading" id="loading">
+                            <div class="spinner"></div>
+                            Processing facial data...
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <label style="display: block; margin-bottom: 15px; font-weight: 600; color: #333;">
+                            Captured Photos (<span id="photoCount">0</span>/3 minimum required)
+                        </label>
+                        <div class="captured-images" id="capturedImages"></div>
+                        <small style="color: #666; display: block; margin-top: 10px;">Click the ✕ button to remove unwanted photos</small>
+                    </div>
+                    <span class="status-badge status-incomplete" id="faceStatus">Incomplete</span>
+                </div>
+
+                <!-- Submit Section -->
+                <div class="submit-section">
+                    <button type="reset" class="btn-secondary">Clear Form</button>
+                    <button type="submit">Submit Registration</button>
+                </div>
+
+                <div class="extra">
+                    <a href="LOG IN.html">← Back to Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers"></script>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+
+    <script>
+        // State management
+        const state = {
+            stream: null,
+            capturedPhotos: [],
+            faceDetectionActive: false,
+            faceMatcher: null,
+            labeledDescriptors: []
+        };
+
+        // DOM Elements
+        const videoElement = document.getElementById('video');
+        const canvasElement = document.getElementById('canvas');
+        const startCameraBtn = document.getElementById('startCameraBtn');
+        const captureFaceBtn = document.getElementById('captureFaceBtn');
+        const stopCameraBtn = document.getElementById('stopCameraBtn');
+        const capturedImagesContainer = document.getElementById('capturedImages');
+        const photoCountSpan = document.getElementById('photoCount');
+        const detectionStatusDiv = document.getElementById('detectionStatus');
+        const cameraStatusDiv = document.getElementById('cameraStatus');
+        const loadingDiv = document.getElementById('loading');
+        const visitorForm = document.getElementById('visitorForm');
+        const alertDiv = document.getElementById('alert');
+
+        // Form inputs
+        const fullNameInput = document.getElementById('fullName');
+        const phoneInput = document.getElementById('phoneNumber');
+        const emailInput = document.getElementById('email');
+        const dobInput = document.getElementById('dateOfBirth');
+        const certInput = document.getElementById('birthCertificate');
+        const reasonInput = document.getElementById('applicationReason');
+
+        // Show alert message
+        function showAlert(message, type = 'info') {
+            alertDiv.textContent = message;
+            alertDiv.className = `alert ${type} show`;
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+            }, 4000);
+        }
+
+        // Status badge updates
+        fullNameInput.addEventListener('input', function() {
+            const badge = document.getElementById('fullNameStatus');
+            if (this.value.trim().length > 0) {
+                badge.className = 'status-badge status-complete';
+                badge.textContent = '✓ Complete';
+            } else {
+                badge.className = 'status-badge status-incomplete';
+                badge.textContent = 'Incomplete';
+            }
+        });
+
+        phoneInput.addEventListener('input', function() {
+            const badge = document.getElementById('phoneStatus');
+            if (this.value.trim().length > 0) {
+                badge.className = 'status-badge status-complete';
+                badge.textContent = '✓ Complete';
+            } else {
+                badge.className = 'status-badge status-incomplete';
+                badge.textContent = 'Incomplete';
+            }
+        });
+
+        emailInput.addEventListener('input', function() {
+            const badge = document.getElementById('emailStatus');
+            if (this.value.trim().length > 0 && this.value.includes('@')) {
+                badge.className = 'status-badge status-complete';
+                badge.textContent = '✓ Complete';
+            } else {
+                badge.className = 'status-badge status-incomplete';
+                badge.textContent = 'Incomplete';
+            }
+        });
+
+        dobInput.addEventListener('input', function() {
+            const badge = document.getElementById('dobStatus');
+            if (this.value.length > 0) {
+                badge.className = 'status-badge status-complete';
+                badge.textContent = '✓ Complete';
+            } else {
+                badge.className = 'status-badge status-incomplete';
+                badge.textContent = 'Incomplete';
+            }
+        });
+
+        certInput.addEventListener('change', function() {
+            const badge = document.getElementById('certStatus');
+            if (this.files.length > 0) {
+                badge.className = 'status-badge status-complete';
+                badge.textContent = '✓ Complete';
+            } else {
+                badge.className = 'status-badge status-incomplete';
+                badge.textContent = 'Incomplete';
+            }
+        });
+
+        reasonInput.addEventListener('change', function() {
+            const badge = document.getElementById('reasonStatus');
+            if (this.value.length > 0) {
+                badge.className = 'status-badge status-complete';
+                badge.textContent = '✓ Complete';
+            } else {
+                badge.className = 'status-badge status-incomplete';
+                badge.textContent = 'Incomplete';
+            }
+        });
+
+        // Load face-api models
+        async function loadModels() {
+            try {
+                await Promise.all([
+                    faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/'),
+                    faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/'),
+                    faceapi.nets.faceRecognitionNet.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/'),
+                    faceapi.nets.faceExpressionNet.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/')
+                ]);
+                console.log('✓ Face detection models loaded');
+            } catch (error) {
+                console.error('Error loading models:', error);
+                showAlert('Error loading facial recognition models. Some features may not work properly.', 'error');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', loadModels);
+
+        // Start Camera
+        startCameraBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                loadingDiv.style.display = 'block';
+                
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: { ideal: 400 },
+                        height: { ideal: 300 },
+                        facingMode: 'user'
+                    },
+                    audio: false
+                });
+
+                state.stream = stream;
+                videoElement.srcObject = stream;
+                videoElement.style.display = 'block';
+                state.faceDetectionActive = true;
+
+                startCameraBtn.style.display = 'none';
+                stopCameraBtn.style.display = 'block';
+                captureFaceBtn.style.display = 'block';
+                captureFaceBtn.disabled = false;
+                cameraStatusDiv.textContent = '✓ Camera is running - ensure good lighting and face is visible';
+                cameraStatusDiv.style.color = '#007a3d';
+
+                loadingDiv.style.display = 'none';
+                
+                // Start face detection loop
+                detectFaces();
+                showAlert('Camera started successfully. Position your face in the camera.', 'success');
+            } catch (error) {
+                loadingDiv.style.display = 'none';
+                console.error('Error accessing camera:', error);
+                showAlert('Unable to access camera. Please check permissions.', 'error');
+            }
+        });
+
+        // Stop Camera
+        stopCameraBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (state.stream) {
+                state.stream.getTracks().forEach(track => track.stop());
+                state.faceDetectionActive = false;
+                videoElement.style.display = 'none';
+                videoElement.srcObject = null;
+
+                startCameraBtn.style.display = 'block';
+                stopCameraBtn.style.display = 'none';
+                captureFaceBtn.style.display = 'none';
+                captureFaceBtn.disabled = true;
+                detectionStatusDiv.textContent = 'No face detected';
+                detectionStatusDiv.classList.remove('success');
+                cameraStatusDiv.textContent = 'Click "Start Camera" to begin facial recognition';
+                cameraStatusDiv.style.color = '#666';
+            }
+        });
+
+        // Face Detection Loop
+        async function detectFaces() {
+            if (!state.faceDetectionActive) return;
+
+            try {
+                const detections = await faceapi
+                    .detectAllFaces(videoElement, new faceapi.TinyFaceDetectorOptions())
+                    .withFaceLandmarks()
+                    .withFaceDescriptors();
+
+                if (detections.length > 0) {
+                    detectionStatusDiv.textContent = '✓ Face detected - Ready to capture';
+                    detectionStatusDiv.classList.add('success');
+                    captureFaceBtn.disabled = false;
+                } else {
+                    detectionStatusDiv.textContent = '✗ No face detected';
+                    detectionStatusDiv.classList.remove('success');
+                    captureFaceBtn.disabled = true;
+                }
+            } catch (error) {
+                console.error('Error detecting faces:', error);
+            }
+
+            requestAnimationFrame(detectFaces);
+        }
+
+        // Capture Face
+        captureFaceBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            try {
+                const ctx = canvasElement.getContext('2d');
+                ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+
+                // Convert canvas to blob/data URL
+                canvasElement.toBlob((blob) => {
+                    // Create object URL for display
+                    const imageUrl = URL.createObjectURL(blob);
+                    
+                    // Store captured photo
+                    const photoObject = {
+                        id: Date.now(),
+                        blob: blob,
+                        url: imageUrl
+                    };
+
+                    state.capturedPhotos.push(photoObject);
+                    updateCapturedPhotosDisplay();
+                    
+                    if (state.capturedPhotos.length >= 3) {
+                        showAlert(`✓ Excellent! You have captured ${state.capturedPhotos.length} photos. Ready to submit.`, 'success');
+                        const badge = document.getElementById('faceStatus');
+                        badge.className = 'status-badge status-complete';
+                        badge.textContent = '✓ Complete';
+                    } else {
+                        showAlert(`Photo captured (${state.capturedPhotos.length}/3 captured)`, 'success');
+                    }
+                }, 'image/jpeg', 0.95);
+            } catch (error) {
+                console.error('Error capturing face:', error);
+                showAlert('Error capturing photo. Please try again.', 'error');
+            }
+        });
+
+        // Update captured photos display
+        function updateCapturedPhotosDisplay() {
+            photoCountSpan.textContent = state.capturedPhotos.length;
+            capturedImagesContainer.innerHTML = '';
+
+            state.capturedPhotos.forEach((photo) => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'image-item';
+                imageItem.innerHTML = `
+                    <img src="${photo.url}" alt="Captured photo">
+                    <button type="button" class="remove-btn" data-photo-id="${photo.id}">✕</button>
+                `;
+
+                // Remove photo button
+                imageItem.querySelector('.remove-btn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    removePhoto(photo.id);
+                });
+
+                capturedImagesContainer.appendChild(imageItem);
+            });
+        }
+
+        // Remove captured photo
+        function removePhoto(photoId) {
+            state.capturedPhotos = state.capturedPhotos.filter(p => p.id !== photoId);
+            updateCapturedPhotosDisplay();
+            const badge = document.getElementById('faceStatus');
+            if (state.capturedPhotos.length < 3) {
+                badge.className = 'status-badge status-incomplete';
+                badge.textContent = 'Incomplete';
+            }
+            showAlert('Photo removed', 'info');
+        }
+
+        // Form submission
+        visitorForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validation
+            if (state.capturedPhotos.length < 3) {
+                showAlert('Please capture at least 3 photos for facial recognition verification.', 'error');
+                window.scrollTo({ top: document.querySelector('.facial-recognition-section').offsetTop - 100, behavior: 'smooth' });
+                return;
+            }
+
+            try {
+                loadingDiv.style.display = 'block';
+
+                // Create FormData for submission
+                const formData = new FormData(visitorForm);
+
+                // Add captured photos
+                state.capturedPhotos.forEach((photo, index) => {
+                    formData.append(`facialPhoto_${index + 1}`, photo.blob, `face_${index + 1}.jpg`);
+                });
+
+                // Add metadata
+                formData.append('capturedPhotosCount', state.capturedPhotos.length);
+                formData.append('registrationDate', new Date().toISOString());
+                formData.append('facialRecognitionVerified', 'true');
+
+                // For demo purposes, log the data
+                console.log('Form Data to be submitted:');
+                for (let [key, value] of formData.entries()) {
+                    if (value instanceof File) {
+                        console.log(`${key}: [File] ${value.name}`);
+                    } else {
+                        console.log(`${key}: ${value}`);
+                    }
+                }
+
+                // Demo: Save to localStorage
+                const registrationData = {
+                    fullName: document.getElementById('fullName').value,
+                    phoneNumber: document.getElementById('phoneNumber').value,
+                    email: document.getElementById('email').value,
+                    dateOfBirth: document.getElementById('dateOfBirth').value,
+                    purpose: document.getElementById('purpose').value,
+                    applicationReason: document.getElementById('applicationReason').value,
+                    businessDetails: document.getElementById('businessDetails').value,
+                    capturedPhotosCount: state.capturedPhotos.length,
+                    registrationDate: new Date().toLocaleString(),
+                    registrationId: 'VIS-' + Date.now()
+                };
+
+                localStorage.setItem('visitorRegistration_' + Date.now(), JSON.stringify(registrationData));
+
+                loadingDiv.style.display = 'none';
+                showAlert(`✓ Registration submitted successfully! Your Registration ID: ${registrationData.registrationId}`, 'success');
+
+                // Reset form
+                setTimeout(() => {
+                    visitorForm.reset();
+                    state.capturedPhotos = [];
+                    updateCapturedPhotosDisplay();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 2000);
+
+            } catch (error) {
+                loadingDiv.style.display = 'none';
+                console.error('Error submitting form:', error);
+                showAlert('Error submitting registration. Please try again.', 'error');
+            }
+        });
+
+        // Load models on page load
+        document.addEventListener('DOMContentLoaded', loadModels);
+
+        // Cleanup when page unloads
+        window.addEventListener('beforeunload', function() {
+            if (state.stream) {
+                state.stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html>
